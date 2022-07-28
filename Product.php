@@ -8,7 +8,7 @@ class Product {
 
     public $productCategory;
 
-    public $animalCategory;
+    public $animalsCategory;
 
     public $price;
 
@@ -16,9 +16,9 @@ class Product {
     
     public $description;
 
-    public function __construct($_name, $_animalCategory, $_price) {
+    public function __construct($_name, $_animalsCategory, $_price) {
        $this->nome = $_name; 
-       $this->animalCategory = $_animalCategory;
+       $this->animalsCategory = $_animalsCategory;
        $this->price = $_price;
     }
 }
