@@ -2,20 +2,22 @@
 
 class Product {
 
-    public $nome;
+    public $name;
 
-    public $marca;
+    public $manufacturer;
 
-    public $categoriaAnimale;
+    public $productCategory;
 
-    public $prezzo;
+    public $animalCategory;
 
-    public $immagine;
+    public $price;
 
-    public function __construct($_categoriaAnimale, $_nome, $_prezzo) {
-       $this->nome = $_nome; 
-       $this->categoriaAnimale = $_categoriaAnimale;
-       $this->prezzo = $_prezzo;
+    public $image;
+
+    public function __construct($_name, $_animalCategory, $_price) {
+       $this->nome = $_name; 
+       $this->animalCategory = $_animalCategory;
+       $this->price = $_price;
     }
 }
 ?>
