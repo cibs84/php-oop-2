@@ -13,6 +13,8 @@ class Product {
     public $price;
 
     public $image;
+    
+    public $description;
 
     public function __construct($_name, $_animalCategory, $_price) {
        $this->nome = $_name; 
