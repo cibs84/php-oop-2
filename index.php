@@ -8,14 +8,15 @@ Il pagamento avviene con la carta prepagata che deve contenere un saldo sufficie
 <?php
 
 require_once __DIR__ . '/Customer.php';
+require_once __DIR__ . '/AnonymousCustomer.php';
+require_once __DIR__ . '/RegisteredCustomer.php';
 require_once __DIR__ . '/Product.php';
 require_once __DIR__ . '/Food.php';
 require_once __DIR__ . '/Game.php';
 require_once __DIR__ . '/DogsBed.php';
 require_once __DIR__ . '/Litter.php';
+require_once __DIR__ . '/PrepaidCard.php';
 
-// Customer Object
-$andrea_verde = new Customer('Andrea', 'Verde', 'a.verde@gmail.com');
 
 // Food Object
 $drn_solo_vegetal_dry_food = new Food('DRN Solo Vegetal Dry Food', 'Dogs', 17);
@@ -27,6 +28,7 @@ $drn_solo_vegetal_dry_food->description = "DRN Solo Vegetal Dry Food è un alime
 $kong_squiggles = new Game('Kong Squiggles', 'Dogs', 5);
 $kong_squiggles->productCategory = 'Peluche';
 $kong_squiggles->sizes = ['Medium', 'Small'];
+$kong_squiggles->manufacturer = 'Kong';
 $kong_squiggles->image = 'https://www.bauzaar.it/media/catalog/product/g/r/grafiche_prodotti_magento_600x600_-_2021-11-19t103539.067_2.png?width=700&height=700&store=default&image-type=image';
 $kong_squiggles->description = 'I KONG Squiggles sono elastici, molli e squittiscono facendo divertire i cani.Questi colorati giocattoli sono disponibili in un assortimento di diversi divertenti personaggi e hanno un corpo lungo ed elastico, oltre al sonoro su entrambi le estremità.Progettati con un’imbottitura minima per meno disordine, il vostro cane può scuotere e sbattere i nostri Squiggles e divertirsi al massimo.';
 
@@ -43,11 +45,36 @@ $bentonite->manufacturer = 'Natural Code';
 $bentonite->description = 'Natural Code Lettiera Bentonite è una lettiera agglomerante per gatti, al 100% naturale. Questa lettiera per gatti è composta da granuli particolarmente assorbenti e agglomeranti in grado di assorbire l\'urina del tuo amico felino in pochissimi secondi, impedendo così ai batteri di crescere, lasciando così la lettiera perfettamente asciutta e priva di polvere. La lettiera è disponibile in due diverse profumazioni: al talco e alla lavanda.';
 
 
-$andrea_verde->balance = 1000;
-// if ($andrea_verde->makePayment() === 'ok') {
-//     echo 'Grazie per aver acquistato nel nostro e-commerce';
-// }
+// RegisteredCustomer Object
+$andrea_verde = new RegisteredCustomer('Andrea', 'Verde', 'a.verde@gmail.com');
+$andrea_verde->addProduct($kong_squiggles);
+$andrea_verde->addProduct($bentonite);
 
-var_dump($andrea_verde);
-var_dump($bentonite);
+// PrepaidCard Object
+$andrea_verde_card = new PrepaidCard(100);
+
+if ($andrea_verde->makePayment($andrea_verde_card->balance) === 'ok') {
+        echo 'Grazie per aver acquistato nel nostro e-commerce';
+}
+
+// AnonymousCustomer Object
+$mario_rossi = new AnonymousCustomer('Mario', 'Rossi', 'm.rossi@gmail.com');
+$mario_rossi->addProduct($kong_squiggles);
+$mario_rossi->addProduct($bentonite);
+
+$mario_rossi->balance = 10;
+if ($mario_rossi->makePayment(null) === 'ok') {
+    echo 'Grazie per aver acquistato nel nostro e-commerce';
+}
+
+
+
+
+
+var_dump($andrea_verde_card);
+// var_dump($andrea_verde);
+// var_dump($andrea_verde->calcFinalPrice());
+
+// var_dump($mario_rossi);
+// var_dump($mario_rossi->calcFinalPrice());
 ?>

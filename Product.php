@@ -17,7 +17,7 @@ class Product {
     public $description;
 
     public function __construct($_name, $_animalsCategory, $_price) {
-       $this->nome = $_name; 
+       $this->name = $_name; 
        $this->animalsCategory = $_animalsCategory;
        $this->price = $_price;
     }
