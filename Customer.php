@@ -1,6 +1,8 @@
 <?php
-
+require_once __DIR__ . '/PurchaseOption.php';
 class Customer {
+
+    use PurchaseOption;
 
     public $name;
 
@@ -20,8 +22,10 @@ class Customer {
         $this->email = $_email;
     }
 
-    public function addProduct($product) {
-        $this->selectedProducts[] = $product;
+    public function addProduct($product, $quantity) {
+        for ($i=1; $i <= $quantity; $i++) { 
+            $this->selectedProducts[] = $product;
+        }
     }
 
     public function getSelectedProducts() {
@@ -38,12 +42,14 @@ class Customer {
         // Apply the discount
         $finalPrice = $sumPrices - ($sumPrices * $this->discount / 100);
 
-        return $finalPrice;
+        $this->setShippingCost($finalPrice);
+        
+        return $finalPrice + $this->getShippingCost();
     }
 
     public function makePayment($prepaidCard) {
-        $finalPrice = $this->calcFinalPrice();
-        if (($prepaidCard->balance === null ? $this->balance : $prepaidCard->balance) < $finalPrice) {
+        // $finalPrice = $this->calcFinalPrice() + $this->getShippingCost();
+        if (($prepaidCard->balance === null ? $this->balance : $prepaidCard->balance) < $this->calcFinalPrice()) {
             die('<h2>Saldo non disponibile</h2>');
         } else {
             return 'ok';

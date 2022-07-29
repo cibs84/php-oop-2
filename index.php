@@ -6,7 +6,6 @@ BONUS:
 Il pagamento avviene con la carta prepagata che deve contenere un saldo sufficiente all'acquisto. -->
 
 <?php
-
 require_once __DIR__ . '/Customer.php';
 require_once __DIR__ . '/AnonymousCustomer.php';
 require_once __DIR__ . '/RegisteredCustomer.php';
@@ -47,12 +46,12 @@ $bentonite->description = 'Natural Code Lettiera Bentonite è una lettiera agglo
 
 // RegisteredCustomer Object
 $andrea_verde = new RegisteredCustomer('Andrea', 'Verde', 'a.verde@gmail.com');
-$andrea_verde->addProduct($kong_squiggles);
-$andrea_verde->addProduct($bentonite);
+$andrea_verde->addProduct($kong_squiggles, 1);
+$andrea_verde->addProduct($bentonite, 4);
 
 // PrepaidCard Object
 $andrea_verde_card = new PrepaidCard('Andrea Verde', 04/24, 233, 564897845);
-$andrea_verde_card->balance = 100;
+$andrea_verde_card->balance = 1500;
 
 if ($andrea_verde->makePayment($andrea_verde_card) === 'ok') {
         echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
@@ -61,12 +60,15 @@ if ($andrea_verde->makePayment($andrea_verde_card) === 'ok') {
 
 // AnonymousCustomer Object
 $mario_rossi = new AnonymousCustomer('Mario', 'Rossi', 'm.rossi@gmail.com');
-$mario_rossi->addProduct($kong_squiggles);
-$mario_rossi->addProduct($bentonite);
+$mario_rossi->addProduct($kong_squiggles, 20);
+$mario_rossi->addProduct($bentonite, 3);
 
-$mario_rossi->balance = 5;
+$mario_rossi->balance = 1000;
 if ($mario_rossi->makePayment(null) === 'ok') {
     echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
 }
 
+// var_dump($bentonite);
+var_dump($mario_rossi);
+var_dump($mario_rossi->calcFinalPrice());
 ?>
