@@ -1,10 +1,3 @@
-<!-- Oggi pomeriggio provate ad immaginare quali sono le classi necessarie per creare uno shop online con le seguenti caratteristiche.
-L'e-commerce vende prodotti per gli animali.
-I prodotti saranno oltre al cibo, anche giochi, cucce, etc.
-L'utente potrà sia comprare i prodotti senza registrarsi, oppure iscriversi e ricevere il 20% di sconto su tutti i prodotti.
-BONUS:
-Il pagamento avviene con la carta prepagata che deve contenere un saldo sufficiente all'acquisto. -->
-
 <?php
 require_once __DIR__ . '/Customer.php';
 require_once __DIR__ . '/AnonymousCustomer.php';
@@ -53,8 +46,13 @@ $andrea_verde->addProduct($bentonite, 4);
 $andrea_verde_card = new PrepaidCard('Andrea Verde', 04/24, 233, 564897845);
 $andrea_verde_card->balance = 1500;
 
-if ($andrea_verde->makePayment($andrea_verde_card) === 'ok') {
+// Effettua il pagamento
+try {
+    if ($andrea_verde->makePayment($andrea_verde_card) === 'ok') {
         echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
+}
+} catch (Exception $e) {
+    echo "<h2>Pagamento non andato a buon fine. Prova a controllare il saldo e riprova</h2>";
 }
 
 
@@ -63,12 +61,19 @@ $mario_rossi = new AnonymousCustomer('Mario', 'Rossi', 'm.rossi@gmail.com');
 $mario_rossi->addProduct($kong_squiggles, 20);
 $mario_rossi->addProduct($bentonite, 3);
 
-$mario_rossi->balance = 1000;
-if ($mario_rossi->makePayment(null) === 'ok') {
-    echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
+$mario_rossi->balance = 0;
+
+// Effettua il pagamento
+try {
+    if ($mario_rossi->makePayment(null) === 'ok') {
+        echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
+    }
+} catch (Exception $e) {
+    echo "<h2>Pagamento non andato a buon fine. Prova a controllare il saldo e riprova</h2>";
 }
 
-// var_dump($bentonite);
+
+// DEBUG
 var_dump($mario_rossi);
 var_dump($mario_rossi->calcFinalPrice());
 ?>

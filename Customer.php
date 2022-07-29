@@ -10,7 +10,7 @@ class Customer {
 
     public $email;
 
-    public $selectedProducts = [];
+    private $selectedProducts = [];
 
     public $balance = 0;
 
@@ -42,15 +42,16 @@ class Customer {
         // Apply the discount
         $finalPrice = $sumPrices - ($sumPrices * $this->discount / 100);
 
+        // Set Shipping Cost
         $this->setShippingCost($finalPrice);
         
+        // Return the final price with the shipping cost
         return $finalPrice + $this->getShippingCost();
     }
 
     public function makePayment($prepaidCard) {
-        // $finalPrice = $this->calcFinalPrice() + $this->getShippingCost();
-        if (($prepaidCard->balance === null ? $this->balance : $prepaidCard->balance) < $this->calcFinalPrice()) {
-            die('<h2>Saldo non disponibile</h2>');
+        if ((is_null($prepaidCard) ? $this->balance : $prepaidCard->balance) < $this->calcFinalPrice()) {
+            throw new Exception("Saldo non disponibile");
         } else {
             return 'ok';
         }
