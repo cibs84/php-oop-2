@@ -51,30 +51,22 @@ $andrea_verde->addProduct($kong_squiggles);
 $andrea_verde->addProduct($bentonite);
 
 // PrepaidCard Object
-$andrea_verde_card = new PrepaidCard(100);
+$andrea_verde_card = new PrepaidCard('Andrea Verde', 04/24, 233, 564897845);
+$andrea_verde_card->balance = 100;
 
-if ($andrea_verde->makePayment($andrea_verde_card->balance) === 'ok') {
-        echo 'Grazie per aver acquistato nel nostro e-commerce';
+if ($andrea_verde->makePayment($andrea_verde_card) === 'ok') {
+        echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
 }
+
 
 // AnonymousCustomer Object
 $mario_rossi = new AnonymousCustomer('Mario', 'Rossi', 'm.rossi@gmail.com');
 $mario_rossi->addProduct($kong_squiggles);
 $mario_rossi->addProduct($bentonite);
 
-$mario_rossi->balance = 10;
+$mario_rossi->balance = 5;
 if ($mario_rossi->makePayment(null) === 'ok') {
-    echo 'Grazie per aver acquistato nel nostro e-commerce';
+    echo '<h2>Grazie per aver acquistato nel nostro e-commerce</h2>';
 }
 
-
-
-
-
-var_dump($andrea_verde_card);
-// var_dump($andrea_verde);
-// var_dump($andrea_verde->calcFinalPrice());
-
-// var_dump($mario_rossi);
-// var_dump($mario_rossi->calcFinalPrice());
 ?>

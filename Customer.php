@@ -41,10 +41,10 @@ class Customer {
         return $finalPrice;
     }
 
-    public function makePayment($prepaidCardBalance) {
+    public function makePayment($prepaidCard) {
         $finalPrice = $this->calcFinalPrice();
-        if (($prepaidCardBalance === null ? $this->balance : $prepaidCardBalance) < $finalPrice) {
-            die('Saldo non disponibile');
+        if (($prepaidCard->balance === null ? $this->balance : $prepaidCard->balance) < $finalPrice) {
+            die('<h2>Saldo non disponibile</h2>');
         } else {
             return 'ok';
         }
